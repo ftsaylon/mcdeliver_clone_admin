@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mcdelivery_clone_admin/widgets/app_drawer.dart';
 import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {
@@ -34,6 +35,8 @@ class _MainScreenState extends State<MainScreen> {
           ),
         ],
       ),
+      drawer: AppDrawer(),
+      body: Container(),
     );
   }
 }

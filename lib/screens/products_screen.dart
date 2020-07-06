@@ -2,24 +2,25 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
-import 'package:mcdelivery_clone_admin/models/order.dart';
-import 'package:mcdelivery_clone_admin/services/orders_service.dart';
+import 'package:mcdelivery_clone_admin/models/product.dart';
+import 'package:mcdelivery_clone_admin/services/products_service.dart';
 import 'package:mcdelivery_clone_admin/widgets/app_drawer.dart';
-import 'package:mcdelivery_clone_admin/widgets/order_list_item.dart';
+import 'package:mcdelivery_clone_admin/widgets/product_list_item.dart';
 import 'package:provider/provider.dart';
 
-class DoneOrdersScreen extends StatefulWidget {
-  static const routeName = '/done-orders';
-  DoneOrdersScreen({Key key}) : super(key: key);
+class ProductsScreen extends StatefulWidget {
+  static const routeName = '/products';
+
+  ProductsScreen({Key key}) : super(key: key);
 
   @override
-  _DoneOrdersScreenState createState() => _DoneOrdersScreenState();
+  _ProductsScreenState createState() => _ProductsScreenState();
 }
 
-class _DoneOrdersScreenState extends State<DoneOrdersScreen> {
+class _ProductsScreenState extends State<ProductsScreen> {
   FirebaseDatabase _database = FirebaseDatabase.instance;
-  String nodeName = 'orders';
-  List<Order> ordersList = <Order>[];
+  String nodeName = 'products';
+  List<Product> productsList = <Product>[];
 
   @override
   void initState() {
@@ -58,7 +59,7 @@ class _DoneOrdersScreenState extends State<DoneOrdersScreen> {
           Padding(
             padding: EdgeInsets.all(24),
             child: Text(
-              'FINISHED ORDERS',
+              'Products',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -66,17 +67,14 @@ class _DoneOrdersScreenState extends State<DoneOrdersScreen> {
             ),
           ),
           Visibility(
-            visible: ordersList.isNotEmpty,
+            visible: productsList.isNotEmpty,
             child: Expanded(
               child: FirebaseAnimatedList(
-                query: _database.reference().child('orders'),
+                query: _database.reference().child('products'),
                 itemBuilder: (context, snapshot, animation, index) {
-                  final order = ordersList[index];
-                  return Visibility(
-                    visible: order.isOnTheWay,
-                    child: OrderListItem(
-                      order: order,
-                    ),
+                  final product = productsList[index];
+                  return ProductListItem(
+                    product: product,
                   );
                 },
               ),
@@ -84,33 +82,37 @@ class _DoneOrdersScreenState extends State<DoneOrdersScreen> {
           ),
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {},
+      ),
     );
   }
 
   _childAdded(Event event) {
     setState(() {
-      ordersList.add(Order.fromSnapshot(event.snapshot));
+      productsList.add(Product.fromSnapshot(event.snapshot));
     });
   }
 
   void _childRemoves(Event event) {
-    var deletedorder = ordersList.singleWhere((order) {
-      return order.id == event.snapshot.key;
+    var deletedproduct = productsList.singleWhere((product) {
+      return product.id == event.snapshot.key;
     });
 
     setState(() {
-      ordersList.removeAt(ordersList.indexOf(deletedorder));
+      productsList.removeAt(productsList.indexOf(deletedproduct));
     });
   }
 
   void _childChanged(Event event) {
-    var changedorder = ordersList.singleWhere((order) {
-      return order.id == event.snapshot.key;
+    var changedproduct = productsList.singleWhere((product) {
+      return product.id == event.snapshot.key;
     });
 
     setState(() {
-      ordersList[ordersList.indexOf(changedorder)] =
-          Order.fromSnapshot(event.snapshot);
+      productsList[productsList.indexOf(changedproduct)] =
+          Product.fromSnapshot(event.snapshot);
     });
   }
 }
