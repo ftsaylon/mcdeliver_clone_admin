@@ -1,0 +1,83 @@
+{
+  "project_info": {
+    "project_number": "440227012517",
+    "firebase_url": "https://mcdelivery-clone-customer-app.firebaseio.com",
+    "project_id": "mcdelivery-clone-customer-app",
+    "storage_bucket": "mcdelivery-clone-customer-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:440227012517:android:de1ff35438aa2a3098524c",
+        "android_client_info": {
+          "package_name": "com.example.mcdelivery_clone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "440227012517-72r1otm84m5imdh5so00gurbvfesqv7h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDaCmfnpptGQfHjuDADo2TjozR4qNQZRF8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "440227012517-72r1otm84m5imdh5so00gurbvfesqv7h.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "440227012517-csp1ser5iqns0hbp1klvt2s4q13vkgmf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.mcdeliveryClone"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:440227012517:android:26664a6aa1bd65f698524c",
+        "android_client_info": {
+          "package_name": "com.example.mcdelivery_clone_admin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "440227012517-72r1otm84m5imdh5so00gurbvfesqv7h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDaCmfnpptGQfHjuDADo2TjozR4qNQZRF8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "440227012517-72r1otm84m5imdh5so00gurbvfesqv7h.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "440227012517-csp1ser5iqns0hbp1klvt2s4q13vkgmf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.mcdeliveryClone"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
