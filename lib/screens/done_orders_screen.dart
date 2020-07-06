@@ -69,6 +69,7 @@ class _DoneOrdersScreenState extends State<DoneOrdersScreen> {
             visible: ordersList.isNotEmpty,
             child: Expanded(
               child: FirebaseAnimatedList(
+                reverse: true,
                 query: _database.reference().child('orders'),
                 itemBuilder: (context, snapshot, animation, index) {
                   final order = ordersList[index];

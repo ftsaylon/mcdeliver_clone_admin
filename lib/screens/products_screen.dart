@@ -3,6 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:mcdelivery_clone_admin/models/product.dart';
+import 'package:mcdelivery_clone_admin/screens/edit_product_screen.dart';
 import 'package:mcdelivery_clone_admin/services/products_service.dart';
 import 'package:mcdelivery_clone_admin/widgets/app_drawer.dart';
 import 'package:mcdelivery_clone_admin/widgets/product_list_item.dart';
@@ -84,7 +85,14 @@ class _ProductsScreenState extends State<ProductsScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => EditProductScreen(),
+            ),
+          );
+        },
       ),
     );
   }
