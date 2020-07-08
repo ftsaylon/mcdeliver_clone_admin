@@ -1,12 +1,13 @@
+import 'package:flutter/material.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
-import 'package:flutter/material.dart';
-import 'package:mcdelivery_clone_admin/models/order.dart';
-import 'package:mcdelivery_clone_admin/services/orders_service.dart';
-import 'package:mcdelivery_clone_admin/widgets/app_drawer.dart';
-import 'package:mcdelivery_clone_admin/widgets/order_list_item.dart';
-import 'package:provider/provider.dart';
+
+import '../models/order.dart';
+
+import '../widgets/app_drawer.dart';
+import '../widgets/order_list_item.dart';
 
 class DoneOrdersScreen extends StatefulWidget {
   static const routeName = '/done-orders';
@@ -66,11 +67,23 @@ class _DoneOrdersScreenState extends State<DoneOrdersScreen> {
             ),
           ),
           Visibility(
+            replacement: Center(
+              child: Text(
+                'You Have No Fulfilled Orders',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
             visible: ordersList.isNotEmpty,
             child: Expanded(
               child: FirebaseAnimatedList(
-                reverse: true,
-                query: _database.reference().child('orders'),
+                query: _database
+                    .reference()
+                    .child('orders')
+                    .orderByChild('isOnTheWay')
+                    .equalTo(true),
                 itemBuilder: (context, snapshot, animation, index) {
                   final order = ordersList[index];
                   return Visibility(
@@ -88,29 +101,30 @@ class _DoneOrdersScreenState extends State<DoneOrdersScreen> {
     );
   }
 
-  _childAdded(Event event) {
+  void _childAdded(Event event) {
+    final newOrder = Order.fromSnapshot(event.snapshot);
     setState(() {
-      ordersList.add(Order.fromSnapshot(event.snapshot));
+      ordersList.insert(0, newOrder);
     });
   }
 
   void _childRemoves(Event event) {
-    var deletedorder = ordersList.singleWhere((order) {
+    final deletedOrder = ordersList.singleWhere((order) {
       return order.id == event.snapshot.key;
     });
 
     setState(() {
-      ordersList.removeAt(ordersList.indexOf(deletedorder));
+      ordersList.removeAt(ordersList.indexOf(deletedOrder));
     });
   }
 
   void _childChanged(Event event) {
-    var changedorder = ordersList.singleWhere((order) {
+    final changedOrder = ordersList.singleWhere((order) {
       return order.id == event.snapshot.key;
     });
 
     setState(() {
-      ordersList[ordersList.indexOf(changedorder)] =
+      ordersList[ordersList.indexOf(changedOrder)] =
           Order.fromSnapshot(event.snapshot);
     });
   }
