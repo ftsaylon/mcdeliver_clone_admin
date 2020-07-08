@@ -10,16 +10,16 @@ class ProductsService with ChangeNotifier {
 
   ProductsService({this.product});
 
-  addProduct() {
-    database.reference().child(nodeName).push().set(product.toMap());
+  Future<void> addProduct() async {
+    await database.reference().child(nodeName).push().set(product.toMap());
   }
 
-  deletePost() {
-    database.reference().child('$nodeName/${product.id}').remove();
+  Future<void> deletePost() async {
+    await database.reference().child('$nodeName/${product.id}').remove();
   }
 
-  updateProduct() {
-    database.reference().child('$nodeName/${product.id}').update(
+  Future<void> updateProduct() async {
+    await database.reference().child('$nodeName/${product.id}').update(
       {
         'title': product.title,
         'categoryId': product.categoryId,

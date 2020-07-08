@@ -10,20 +10,20 @@ class OrdersService with ChangeNotifier {
 
   OrdersService({this.order});
 
-  setOrderIsProcessed(bool status) {
-    database.reference().child('$nodeName/${order.id}').update({
+  Future<void> setOrderIsProcessed(bool status) async {
+    await database.reference().child('$nodeName/${order.id}').update({
       'isProcessed': status,
     });
   }
 
-  setOrderIsBeingPrepared(bool status) {
-    database.reference().child('$nodeName/${order.id}').update({
+  Future<void> setOrderIsBeingPrepared(bool status) async {
+    await database.reference().child('$nodeName/${order.id}').update({
       'isBeingPrepared': status,
     });
   }
 
-  setOrderIsOnTheWay(bool status) {
-    database.reference().child('$nodeName/${order.id}').update({
+  Future<void> setOrderIsOnTheWay(bool status) async {
+    await database.reference().child('$nodeName/${order.id}').update({
       'isOnTheWay': status,
     });
   }

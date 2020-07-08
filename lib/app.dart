@@ -4,8 +4,9 @@ import 'package:mcdelivery_clone_admin/screens/auth_screen.dart';
 import 'package:mcdelivery_clone_admin/screens/done_orders_screen.dart';
 import 'package:mcdelivery_clone_admin/screens/edit_product_screen.dart';
 import 'package:mcdelivery_clone_admin/screens/main_screen.dart';
+import 'package:mcdelivery_clone_admin/screens/menu_screen.dart';
 import 'package:mcdelivery_clone_admin/screens/orders_screen.dart';
-import 'package:mcdelivery_clone_admin/screens/products_screen.dart';
+import 'package:mcdelivery_clone_admin/screens/products_list.dart';
 
 class App extends StatelessWidget {
   @override
@@ -21,7 +22,7 @@ class App extends StatelessWidget {
         stream: FirebaseAuth.instance.onAuthStateChanged,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return OrdersScreen();
+            return MainScreen();
           }
           return AuthScreen();
         },
@@ -30,7 +31,7 @@ class App extends StatelessWidget {
         MainScreen.routeName: (context) => MainScreen(),
         OrdersScreen.routeName: (context) => OrdersScreen(),
         DoneOrdersScreen.routeName: (context) => DoneOrdersScreen(),
-        ProductsScreen.routeName: (context) => ProductsScreen(),
+        MenuScreen.routeName: (context) => MenuScreen(),
         EditProductScreen.routeName: (context) => EditProductScreen(),
       },
     );

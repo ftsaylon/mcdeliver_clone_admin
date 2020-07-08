@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:mcdelivery_clone_admin/models/product.dart';
-import 'package:mcdelivery_clone_admin/services/products_service.dart';
-import 'package:provider/provider.dart';
+
+import '../models/product.dart';
+
+import '../services/products_service.dart';
 
 class EditProductScreen extends StatefulWidget {
-  Product product;
+  final Product product;
 
   static const routeName = '/edit-product';
 
@@ -47,8 +48,8 @@ class _EditProductScreenState extends State<EditProductScreen> {
   void initState() {
     _imageUrlFocusNode.addListener(_updateImageUrl);
 
-    _editedProduct = widget.product;
-    if (_editedProduct != null) {
+    if (widget.product != null) {
+      _editedProduct = widget.product;
       _initValues = {
         'categoryId': _editedProduct.categoryId,
         'title': _editedProduct.title,
@@ -130,7 +131,9 @@ class _EditProductScreenState extends State<EditProductScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit Product'),
+        title: (_editedProduct.id != null)
+            ? Text('Edit Product')
+            : Text('Add Product'),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.save),

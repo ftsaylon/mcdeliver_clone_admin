@@ -67,8 +67,8 @@ class _OrderListItemState extends State<OrderListItem> {
                                   color: (widget.order.isProcessed)
                                       ? Colors.green
                                       : Colors.grey[300],
-                                  onPressed: () {
-                                    ordersService.setOrderIsProcessed(
+                                  onPressed: () async {
+                                    await ordersService.setOrderIsProcessed(
                                       !widget.order.isProcessed,
                                     );
                                   },
@@ -85,8 +85,8 @@ class _OrderListItemState extends State<OrderListItem> {
                                   color: (widget.order.isBeingPrepared)
                                       ? Colors.green
                                       : Colors.grey[300],
-                                  onPressed: () {
-                                    ordersService.setOrderIsBeingPrepared(
+                                  onPressed: () async {
+                                    await ordersService.setOrderIsBeingPrepared(
                                       !widget.order.isBeingPrepared,
                                     );
                                   },
@@ -103,8 +103,8 @@ class _OrderListItemState extends State<OrderListItem> {
                                   color: (widget.order.isOnTheWay)
                                       ? Colors.green
                                       : Colors.grey[300],
-                                  onPressed: () {
-                                    ordersService.setOrderIsOnTheWay(
+                                  onPressed: () async {
+                                    await ordersService.setOrderIsOnTheWay(
                                       !widget.order.isOnTheWay,
                                     );
                                   },

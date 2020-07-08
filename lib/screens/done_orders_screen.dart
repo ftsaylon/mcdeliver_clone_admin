@@ -6,7 +6,6 @@ import 'package:firebase_database/ui/firebase_animated_list.dart';
 
 import '../models/order.dart';
 
-import '../widgets/app_drawer.dart';
 import '../widgets/order_list_item.dart';
 
 class DoneOrdersScreen extends StatefulWidget {
@@ -32,28 +31,8 @@ class _DoneOrdersScreenState extends State<DoneOrdersScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          children: <Widget>[
-            Image.asset(
-              'assets/images/logo/simple_logo.png',
-              height: MediaQuery.of(context).size.width * 0.15,
-            ),
-            Text('McDelivery'),
-          ],
-        ),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.exit_to_app),
-            onPressed: () {
-              FirebaseAuth.instance.signOut();
-            },
-          ),
-        ],
-      ),
-      drawer: AppDrawer(),
-      body: Column(
+    return Container(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Padding(
@@ -66,35 +45,43 @@ class _DoneOrdersScreenState extends State<DoneOrdersScreen> {
               ),
             ),
           ),
-          Visibility(
-            replacement: Center(
-              child: Text(
-                'You Have No Fulfilled Orders',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            visible: ordersList.isNotEmpty,
-            child: Expanded(
-              child: FirebaseAnimatedList(
-                query: _database
-                    .reference()
-                    .child('orders')
-                    .orderByChild('isOnTheWay')
-                    .equalTo(true),
-                itemBuilder: (context, snapshot, animation, index) {
-                  final order = ordersList[index];
-                  return Visibility(
-                    visible: order.isOnTheWay,
-                    child: OrderListItem(
-                      order: order,
+          FutureBuilder(
+            future: FirebaseAuth.instance.currentUser(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(child: CircularProgressIndicator());
+              }
+              return Visibility(
+                replacement: Center(
+                  child: Text(
+                    'You Have No Fulfilled Orders',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
                     ),
-                  );
-                },
-              ),
-            ),
+                  ),
+                ),
+                visible: ordersList.isNotEmpty,
+                child: Expanded(
+                  child: FirebaseAnimatedList(
+                    query: _database
+                        .reference()
+                        .child('orders')
+                        .orderByChild('isOnTheWay')
+                        .equalTo(true),
+                    itemBuilder: (context, snapshot, animation, index) {
+                      final order = ordersList[index];
+                      return Visibility(
+                        visible: order.isOnTheWay,
+                        child: OrderListItem(
+                          order: order,
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              );
+            },
           ),
         ],
       ),
