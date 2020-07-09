@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mcdelivery_clone_admin/models/product.dart';
-import 'package:mcdelivery_clone_admin/services/products_service.dart';
 
-import 'product_form.dart';
+import '../models/product.dart';
+import '../services/products_service.dart';
+
+import '../screens/product_form_screen.dart';
 
 class ProductListItem extends StatelessWidget {
   final Product product;
@@ -57,7 +58,7 @@ class ProductListItem extends StatelessWidget {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ProductForm(
+        builder: (context) => ProductFormScreen(
           product: product,
           categoryId: product.categoryId,
         ),

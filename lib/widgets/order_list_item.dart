@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:mcdelivery_clone_admin/models/order.dart';
-import 'package:mcdelivery_clone_admin/services/orders_service.dart';
+
+import '../models/order.dart';
+
+import '../services/orders_service.dart';
 
 class OrderListItem extends StatefulWidget {
   final Order order;
@@ -17,7 +19,6 @@ class OrderListItem extends StatefulWidget {
 
 class _OrderListItemState extends State<OrderListItem> {
   var _expanded = false;
-  var _isLoading = false;
 
   @override
   Widget build(BuildContext context) {

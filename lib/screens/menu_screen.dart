@@ -3,9 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
-import 'package:mcdelivery_clone_admin/models/category.dart';
-import 'package:mcdelivery_clone_admin/widgets/category_form.dart';
 
+import '../models/category.dart';
+
+import '../widgets/category_form.dart';
 import '../widgets/category_list_item.dart';
 
 class MenuScreen extends StatefulWidget {

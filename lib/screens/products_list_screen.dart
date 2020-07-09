@@ -4,13 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
-import 'package:mcdelivery_clone_admin/models/category.dart';
 
+import '../models/category.dart';
 import '../models/product.dart';
 
-import '../widgets/product_form.dart';
-import '../services/products_service.dart';
-
+import '../screens/product_form_screen.dart';
 import '../widgets/product_list_item.dart';
 
 class ProductsListScreen extends StatefulWidget {
@@ -107,7 +105,7 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => ProductForm(
+                          builder: (context) => ProductFormScreen(
                             categoryId: widget.category.id,
                           ),
                         ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mcdelivery_clone_admin/models/category.dart';
-import 'package:mcdelivery_clone_admin/services/categories_service.dart';
+import '../models/category.dart';
+import '../services/categories_service.dart';
 
 class CategoryForm extends StatefulWidget {
   final Category category;

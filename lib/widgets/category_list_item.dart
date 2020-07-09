@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:mcdelivery_clone_admin/models/category.dart';
-import 'package:mcdelivery_clone_admin/screens/products_list_screen.dart';
-import 'package:mcdelivery_clone_admin/services/categories_service.dart';
 
-import 'category_form.dart';
+import '../models/category.dart';
+
+import '../services/categories_service.dart';
+
+import '../screens/products_list_screen.dart';
+
+import '../widgets/category_form.dart';
 
 class CategoryListItem extends StatelessWidget {
   final Category category;

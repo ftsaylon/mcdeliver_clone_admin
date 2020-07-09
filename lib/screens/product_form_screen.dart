@@ -1,32 +1,33 @@
 import 'dart:io';
 
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:mcdelivery_clone_admin/widgets/user_image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:uuid/uuid.dart';
-
-import '../models/product.dart';
 
 import '../services/products_service.dart';
 
-class ProductForm extends StatefulWidget {
+import '../models/product.dart';
+
+import '../widgets/user_image_picker.dart';
+
+class ProductFormScreen extends StatefulWidget {
   final Product product;
 
   final String categoryId;
 
   static const routeName = '/edit-product';
 
-  ProductForm({
+  ProductFormScreen({
     Key key,
     this.product,
     this.categoryId,
   }) : super(key: key);
 
   @override
-  _ProductFormState createState() => _ProductFormState();
+  _ProductFormScreenState createState() => _ProductFormScreenState();
 }
 
-class _ProductFormState extends State<ProductForm> {
+class _ProductFormScreenState extends State<ProductFormScreen> {
   final _priceFocusNode = FocusNode();
   final _descriptionFocusNode = FocusNode();
   final _form = GlobalKey<FormState>();

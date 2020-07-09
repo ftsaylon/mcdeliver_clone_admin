@@ -1,7 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:mcdelivery_clone_admin/screens/auth_screen.dart';
-import 'package:mcdelivery_clone_admin/screens/main_screen.dart';
+
+import './screens/auth_screen.dart';
+import './screens/main_screen.dart';
 
 class App extends StatelessWidget {
   @override
