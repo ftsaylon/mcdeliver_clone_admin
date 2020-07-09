@@ -1,12 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mcdelivery_clone_admin/screens/auth_screen.dart';
-import 'package:mcdelivery_clone_admin/screens/done_orders_screen.dart';
-import 'package:mcdelivery_clone_admin/screens/edit_product_screen.dart';
 import 'package:mcdelivery_clone_admin/screens/main_screen.dart';
-import 'package:mcdelivery_clone_admin/screens/menu_screen.dart';
-import 'package:mcdelivery_clone_admin/screens/orders_screen.dart';
-import 'package:mcdelivery_clone_admin/screens/products_list_screen.dart';
 
 class App extends StatelessWidget {
   @override
@@ -27,13 +22,6 @@ class App extends StatelessWidget {
           return AuthScreen();
         },
       ),
-      routes: {
-        MainScreen.routeName: (context) => MainScreen(),
-        OrdersScreen.routeName: (context) => OrdersScreen(),
-        DoneOrdersScreen.routeName: (context) => DoneOrdersScreen(),
-        MenuScreen.routeName: (context) => MenuScreen(),
-        EditProductScreen.routeName: (context) => EditProductScreen(),
-      },
     );
   }
 }

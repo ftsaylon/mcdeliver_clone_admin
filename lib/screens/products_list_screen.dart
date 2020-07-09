@@ -6,7 +6,7 @@ import 'package:mcdelivery_clone_admin/models/category.dart';
 
 import '../models/product.dart';
 
-import 'edit_product_screen.dart';
+import '../widgets/product_form.dart';
 import '../services/products_service.dart';
 
 import '../widgets/product_list_item.dart';
@@ -61,29 +61,38 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => EditProductScreen(),
-            ),
-          );
-        },
-      ),
       body: Container(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.all(24),
-              child: Text(
-                'Products',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(
+                    'Products',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  RaisedButton(
+                    child: Text('ADD PRODUCT'),
+                    color: Theme.of(context).accentColor,
+                    onPressed: () {
+                      // _showAddProduct(context);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ProductForm(
+                            categoryId: widget.category.id,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ],
               ),
             ),
             FutureBuilder(
@@ -144,4 +153,15 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
           Product.fromSnapshot(event.snapshot);
     });
   }
+
+  // void _showAddProduct(BuildContext context) {
+  //   showModalBottomSheet(
+  //     context: context,
+  //     builder: (context) {
+  //       return ProductForm(
+  //         categoryId: widget.category.id,
+  //       );
+  //     },
+  //   );
+  // }
 }

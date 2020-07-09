@@ -40,6 +40,12 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>We need your permission so we can upload your images</string>
+	<key>NSCameraUsageDescription</key>
+	<string>We need your permission so we can upload your images</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>We need your permission so we can upload your images</string>
 	<false/>
 </dict>
 </plist>
