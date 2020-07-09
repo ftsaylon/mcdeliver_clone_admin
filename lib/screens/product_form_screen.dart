@@ -251,7 +251,9 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
                         padding: const EdgeInsets.all(8.0),
                         child: UserImagePicker(
                           _pickedImage,
-                          imageUrl: widget.product.imageUrl,
+                          imageUrl: (widget.product != null)
+                              ? widget.product.imageUrl
+                              : null,
                         ),
                       ),
                       Container(
