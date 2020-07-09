@@ -18,7 +18,6 @@ class Product {
   });
 
   factory Product.fromSnapshot(DataSnapshot snapshot) {
-    print('${snapshot.value['categoryId']} ${snapshot.value['title']}');
     return Product(
       id: snapshot.key,
       title: snapshot.value['title'],

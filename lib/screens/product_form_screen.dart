@@ -62,7 +62,7 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
         'title': _editedProduct.title,
         'description': _editedProduct.description,
         'price': _editedProduct.price.toString(),
-        'imageUrl': '',
+        'imageUrl': _editedProduct.imageUrl,
       };
     }
     super.initState();
@@ -87,31 +87,25 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
 
     _form.currentState.save();
 
-    if (_userImageFile == null) {
-      Scaffold.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Please pick an image.'),
-          backgroundColor: Theme.of(context).errorColor,
-        ),
+    var imageUrl;
+
+    if (_userImageFile != null) {
+      final storage = FirebaseStorage.instance;
+
+      final ref =
+          storage.ref().child('product_image').child(Uuid().v1() + '.png');
+      await ref.putFile(_userImageFile).onComplete;
+      imageUrl = await ref.getDownloadURL();
+
+      _editedProduct = Product(
+        title: _editedProduct.title,
+        price: _editedProduct.price,
+        description: _editedProduct.description,
+        imageUrl: imageUrl,
+        id: _editedProduct.id,
+        categoryId: widget.categoryId,
       );
-      return;
     }
-
-    final storage = FirebaseStorage.instance;
-
-    final ref =
-        storage.ref().child('product_image').child(Uuid().v1() + '.png');
-    await ref.putFile(_userImageFile).onComplete;
-    final imageUrl = await ref.getDownloadURL();
-
-    _editedProduct = Product(
-      title: _editedProduct.title,
-      price: _editedProduct.price,
-      description: _editedProduct.description,
-      imageUrl: imageUrl,
-      id: _editedProduct.id,
-      categoryId: widget.categoryId,
-    );
 
     final productsService = ProductsService(product: _editedProduct);
 
