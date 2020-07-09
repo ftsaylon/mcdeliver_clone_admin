@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:uuid/uuid.dart';
 
@@ -117,6 +118,7 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
     setState(() {
       _isLoading = true;
     });
+
     if (_editedProduct.id != null) {
       productsService.updateProduct();
     } else {
@@ -149,7 +151,26 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Row(
+          children: <Widget>[
+            Image.asset(
+              'assets/images/logo/simple_logo.png',
+              height: MediaQuery.of(context).size.width * 0.15,
+            ),
+            Text('McDelivery'),
+          ],
+        ),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.exit_to_app),
+            onPressed: () {
+              Navigator.of(context).popUntil(ModalRoute.withName('/'));
+              FirebaseAuth.instance.signOut();
+            },
+          ),
+        ],
+      ),
       body: Container(
         child: _isLoading
             ? Center(
