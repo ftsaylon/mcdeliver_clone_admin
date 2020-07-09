@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>440227012517-scttkjlncoo73r595q46l1mposungbll.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.440227012517-scttkjlncoo73r595q46l1mposungbll</string>
+	<key>API_KEY</key>
+	<string>AIzaSyClWfeEceNw8HAQGeriZu6Oh4H8rmd34jY</string>
+	<key>GCM_SENDER_ID</key>
+	<string>440227012517</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.mcdeliveryCloneAdmin</string>
+	<key>PROJECT_ID</key>
+	<string>mcdelivery-clone-customer-app</string>
+	<key>STORAGE_BUCKET</key>
+	<string>mcdelivery-clone-customer-app.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:440227012517:ios:6dc9550c6f0497ca98524c</string>
+	<key>DATABASE_URL</key>
+	<string>https://mcdelivery-clone-customer-app.firebaseio.com</string>
+</dict>
+</plist>
