@@ -164,8 +164,8 @@ class _ProductFormState extends State<ProductForm> {
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
                           (_editedProduct.id != null)
-                              ? 'EDIT CATEGORY'
-                              : 'NEW CATEGORY',
+                              ? 'Edit Product'
+                              : 'New Product',
                           style: TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
@@ -248,7 +248,10 @@ class _ProductFormState extends State<ProductForm> {
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: UserImagePicker(_pickedImage),
+                        child: UserImagePicker(
+                          _pickedImage,
+                          imageUrl: widget.product.imageUrl,
+                        ),
                       ),
                       Container(
                         width: double.infinity,

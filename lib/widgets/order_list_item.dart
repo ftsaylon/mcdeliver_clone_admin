@@ -17,127 +17,124 @@ class OrderListItem extends StatefulWidget {
 
 class _OrderListItemState extends State<OrderListItem> {
   var _expanded = false;
+  var _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
     final ordersService = OrdersService(order: widget.order);
     final deviceSize = MediaQuery.of(context).size;
 
-    return GestureDetector(
-      child: Container(
-        child: Card(
-          margin: EdgeInsets.all(8),
-          child: InkWell(
-            onTap: () {},
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+    return Card(
+      margin: EdgeInsets.all(8),
+      child: InkWell(
+        onTap: () {},
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          '\$${widget.order.amount}',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          DateFormat('dd/MM/yyyy hh:mm')
+                              .format(widget.order.dateCreated),
+                          style: TextStyle(
+                            fontSize: 18,
+                          ),
+                        ),
+                        Text(
+                          '${widget.order.customerName}',
+                          style: TextStyle(
+                            fontSize: 18,
+                          ),
+                        ),
+                        Row(
                           children: <Widget>[
-                            Text(
-                              '\$${widget.order.amount}',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Text(
-                              DateFormat('dd/MM/yyyy hh:mm')
-                                  .format(widget.order.dateCreated),
-                              style: TextStyle(
-                                fontSize: 18,
-                              ),
-                            ),
-                            Text(
-                              '${widget.order.customerName}',
-                              style: TextStyle(
-                                fontSize: 18,
-                              ),
-                            ),
-                            Row(
-                              children: <Widget>[
-                                RaisedButton(
+                            RaisedButton(
+                              color: (widget.order.isProcessed)
+                                  ? Colors.green
+                                  : Colors.grey[300],
+                              onPressed: () async {
+                                await ordersService.setOrderIsProcessed(
+                                  !widget.order.isProcessed,
+                                );
+                              },
+                              child: Text(
+                                'Processed',
+                                style: TextStyle(
                                   color: (widget.order.isProcessed)
-                                      ? Colors.green
-                                      : Colors.grey[300],
-                                  onPressed: () async {
-                                    await ordersService.setOrderIsProcessed(
-                                      !widget.order.isProcessed,
-                                    );
-                                  },
-                                  child: Text(
-                                    'Processed',
-                                    style: TextStyle(
-                                      color: (widget.order.isProcessed)
-                                          ? Colors.white
-                                          : Colors.black,
-                                    ),
-                                  ),
+                                      ? Colors.white
+                                      : Colors.black,
                                 ),
-                                RaisedButton(
+                              ),
+                            ),
+                            RaisedButton(
+                              color: (widget.order.isBeingPrepared)
+                                  ? Colors.green
+                                  : Colors.grey[300],
+                              onPressed: () async {
+                                await ordersService.setOrderIsBeingPrepared(
+                                  !widget.order.isBeingPrepared,
+                                );
+                              },
+                              child: Text(
+                                'Preparing',
+                                style: TextStyle(
                                   color: (widget.order.isBeingPrepared)
-                                      ? Colors.green
-                                      : Colors.grey[300],
-                                  onPressed: () async {
-                                    await ordersService.setOrderIsBeingPrepared(
-                                      !widget.order.isBeingPrepared,
-                                    );
-                                  },
-                                  child: Text(
-                                    'Preparing',
-                                    style: TextStyle(
-                                      color: (widget.order.isBeingPrepared)
-                                          ? Colors.white
-                                          : Colors.black,
-                                    ),
-                                  ),
+                                      ? Colors.white
+                                      : Colors.black,
                                 ),
-                                RaisedButton(
+                              ),
+                            ),
+                            RaisedButton(
+                              color: (widget.order.isOnTheWay)
+                                  ? Colors.green
+                                  : Colors.grey[300],
+                              onPressed: () async {
+                                await ordersService.setOrderIsOnTheWay(
+                                  !widget.order.isOnTheWay,
+                                );
+                              },
+                              child: Text(
+                                'Done',
+                                style: TextStyle(
                                   color: (widget.order.isOnTheWay)
-                                      ? Colors.green
-                                      : Colors.grey[300],
-                                  onPressed: () async {
-                                    await ordersService.setOrderIsOnTheWay(
-                                      !widget.order.isOnTheWay,
-                                    );
-                                  },
-                                  child: Text(
-                                    'Done',
-                                    style: TextStyle(
-                                      color: (widget.order.isOnTheWay)
-                                          ? Colors.white
-                                          : Colors.black,
-                                    ),
-                                  ),
+                                      ? Colors.white
+                                      : Colors.black,
                                 ),
-                              ],
+                              ),
                             ),
                           ],
                         ),
-                      ),
-                      IconButton(
-                        icon: Icon(
-                            _expanded ? Icons.expand_less : Icons.expand_more),
-                        onPressed: () {
-                          setState(() {
-                            _expanded = !_expanded;
-                          });
-                        },
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                if (_expanded) _buildProductsList(deviceSize),
-              ],
+                  IconButton(
+                    icon:
+                        Icon(_expanded ? Icons.expand_less : Icons.expand_more),
+                    onPressed: () {
+                      setState(() {
+                        _expanded = !_expanded;
+                      });
+                    },
+                  ),
+                ],
+              ),
             ),
-          ),
+            if (_expanded) _buildProductsList(deviceSize),
+          ],
         ),
       ),
     );

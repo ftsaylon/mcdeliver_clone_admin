@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class UserImagePicker extends StatefulWidget {
-  UserImagePicker(this.imagePickFn);
+  final String imageUrl;
+
+  UserImagePicker(this.imagePickFn, {this.imageUrl});
 
   final void Function(File pickedImage) imagePickFn;
 
@@ -39,10 +41,16 @@ class _UserImagePickerState extends State<UserImagePicker> {
           icon: Icon(Icons.image),
           label: Text('Upload Image'),
         ),
-        Container(
-          width: 150,
-          child: (_pickedImage != null) ? Image.file(_pickedImage) : null,
-        ),
+        if (_pickedImage != null)
+          Container(
+            width: 150,
+            child: Image.file(_pickedImage),
+          ),
+        if (widget.imageUrl != null && _pickedImage == null)
+          Container(
+            width: 150,
+            child: Image.network(widget.imageUrl),
+          ),
       ],
     );
   }

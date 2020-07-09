@@ -68,15 +68,6 @@ class _DoneOrdersScreenState extends State<DoneOrdersScreen> {
             ),
           ),
           Visibility(
-            replacement: Center(
-              child: Text(
-                'You Have No Fulfilled Orders',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
             visible: ordersList.isNotEmpty,
             child: Expanded(
               child: FirebaseAnimatedList(
@@ -87,12 +78,9 @@ class _DoneOrdersScreenState extends State<DoneOrdersScreen> {
                     .equalTo(true),
                 itemBuilder: (context, snapshot, animation, index) {
                   final order = ordersList[index];
-                  return Visibility(
-                    visible: order.isOnTheWay,
-                    child: OrderListItem(
-                      key: UniqueKey(),
-                      order: order,
-                    ),
+                  return OrderListItem(
+                    key: UniqueKey(),
+                    order: order,
                   );
                 },
               ),
@@ -105,9 +93,11 @@ class _DoneOrdersScreenState extends State<DoneOrdersScreen> {
 
   void _childAdded(Event event) {
     final newOrder = Order.fromSnapshot(event.snapshot);
-    setState(() {
-      ordersList.insert(0, newOrder);
-    });
+    if (newOrder.isOnTheWay) {
+      setState(() {
+        ordersList.insert(0, newOrder);
+      });
+    }
   }
 
   void _childRemoves(Event event) {

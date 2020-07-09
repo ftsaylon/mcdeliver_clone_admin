@@ -69,15 +69,6 @@ class _OrdersScreenState extends State<OrdersScreen> {
             ),
           ),
           Visibility(
-            replacement: Center(
-              child: Text(
-                'You Have No Pending Orders',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
             visible: ordersList.isNotEmpty,
             child: Expanded(
               child: FirebaseAnimatedList(
@@ -88,12 +79,9 @@ class _OrdersScreenState extends State<OrdersScreen> {
                     .equalTo(false),
                 itemBuilder: (context, snapshot, animation, index) {
                   final order = ordersList[index];
-                  return Visibility(
-                    visible: !order.isOnTheWay,
-                    child: OrderListItem(
-                      key: UniqueKey(),
-                      order: order,
-                    ),
+                  return OrderListItem(
+                    key: UniqueKey(),
+                    order: order,
                   );
                 },
               ),
@@ -106,9 +94,11 @@ class _OrdersScreenState extends State<OrdersScreen> {
 
   void _childAdded(Event event) {
     final newOrder = Order.fromSnapshot(event.snapshot);
-    setState(() {
-      ordersList.insert(0, newOrder);
-    });
+    if (!newOrder.isOnTheWay) {
+      setState(() {
+        ordersList.insert(0, newOrder);
+      });
+    }
   }
 
   void _childRemoves(Event event) {
