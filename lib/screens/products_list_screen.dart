@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -30,12 +32,33 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
   String nodeName = 'products';
   List<Product> productsList = <Product>[];
 
+  StreamSubscription<Event> _onChildAdded;
+  StreamSubscription<Event> _onChildRemoved;
+  StreamSubscription<Event> _onChildChanged;
+
   @override
   void initState() {
-    _database.reference().child(nodeName).onChildAdded.listen(_childAdded);
-    _database.reference().child(nodeName).onChildRemoved.listen(_childRemoves);
-    _database.reference().child(nodeName).onChildChanged.listen(_childChanged);
+    _onChildAdded =
+        _database.reference().child(nodeName).onChildAdded.listen(_childAdded);
+    _onChildRemoved = _database
+        .reference()
+        .child(nodeName)
+        .onChildRemoved
+        .listen(_childRemoves);
+    _onChildChanged = _database
+        .reference()
+        .child(nodeName)
+        .onChildChanged
+        .listen(_childChanged);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _onChildAdded.cancel();
+    _onChildRemoved.cancel();
+    _onChildChanged.cancel();
+    super.dispose();
   }
 
   @override
@@ -71,7 +94,7 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Text(
-                    'Products',
+                    '${widget.category.title}',
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -81,7 +104,6 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
                     child: Text('ADD PRODUCT'),
                     color: Theme.of(context).accentColor,
                     onPressed: () {
-                      // _showAddProduct(context);
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -95,31 +117,27 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
                 ],
               ),
             ),
-            FutureBuilder(
-              future: FirebaseAuth.instance.currentUser(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
-                }
-                return Visibility(
-                  visible: productsList.isNotEmpty,
-                  child: Expanded(
-                    child: FirebaseAnimatedList(
-                      query: _database
-                          .reference()
-                          .child('products')
-                          .orderByChild('categoryId')
-                          .equalTo(widget.category.id),
-                      itemBuilder: (context, snapshot, animation, index) {
-                        final product = productsList[index];
-                        return ProductListItem(
-                          product: product,
-                        );
-                      },
-                    ),
-                  ),
-                );
-              },
+            Visibility(
+              visible: productsList.isNotEmpty,
+              child: Expanded(
+                child: FirebaseAnimatedList(
+                  query: _database
+                      .reference()
+                      .child('products')
+                      .orderByChild('categoryId')
+                      .equalTo(widget.category.id),
+                  itemBuilder: (context, snapshot, animation, index) {
+                    final product = productsList[index];
+                    if (index < productsList.length) {
+                      return ProductListItem(
+                        key: UniqueKey(),
+                        product: product,
+                      );
+                    }
+                    return Center(child: CircularProgressIndicator());
+                  },
+                ),
+              ),
             ),
           ],
         ),
@@ -128,18 +146,20 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
   }
 
   void _childAdded(Event event) {
-    setState(() {
-      productsList.add(Product.fromSnapshot(event.snapshot));
-    });
+    if (event.snapshot.value['categoryId'] == widget.category.id) {
+      setState(() {
+        productsList.add(Product.fromSnapshot(event.snapshot));
+      });
+    }
   }
 
   void _childRemoves(Event event) {
-    var deletedproduct = productsList.singleWhere((product) {
+    var deletedProduct = productsList.singleWhere((product) {
       return product.id == event.snapshot.key;
     });
 
     setState(() {
-      productsList.removeAt(productsList.indexOf(deletedproduct));
+      productsList.removeAt(productsList.indexOf(deletedProduct));
     });
   }
 
@@ -153,15 +173,4 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
           Product.fromSnapshot(event.snapshot);
     });
   }
-
-  // void _showAddProduct(BuildContext context) {
-  //   showModalBottomSheet(
-  //     context: context,
-  //     builder: (context) {
-  //       return ProductForm(
-  //         categoryId: widget.category.id,
-  //       );
-  //     },
-  //   );
-  // }
 }

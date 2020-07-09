@@ -18,9 +18,8 @@ class _UserImagePickerState extends State<UserImagePicker> {
   void _pickImage() async {
     final picker = ImagePicker();
     final pickedImage = await picker.getImage(
-      source: ImageSource.camera,
-      imageQuality: 50,
-      maxWidth: 150,
+      source: ImageSource.gallery,
+      imageQuality: 70,
     );
     final pickedImageFile = File(pickedImage.path);
     setState(() {
@@ -41,9 +40,8 @@ class _UserImagePickerState extends State<UserImagePicker> {
           label: Text('Upload Image'),
         ),
         Container(
-          height: 150,
-          child:
-              (_pickedImage != null) ? Image.file(_pickedImage) : Container(),
+          width: 150,
+          child: (_pickedImage != null) ? Image.file(_pickedImage) : null,
         ),
       ],
     );

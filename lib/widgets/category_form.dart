@@ -49,8 +49,6 @@ class _CategoryFormState extends State<CategoryForm> {
   }
 
   Future<void> _saveForm() async {
-    print(_editedCategory.title);
-
     final isValid = _form.currentState.validate();
     if (!isValid) {
       return;

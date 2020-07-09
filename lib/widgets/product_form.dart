@@ -160,13 +160,16 @@ class _ProductFormState extends State<ProductForm> {
                   key: _form,
                   child: ListView(
                     children: <Widget>[
-                      Text(
-                        (_editedProduct.id != null)
-                            ? 'EDIT CATEGORY'
-                            : 'NEW CATEGORY',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          (_editedProduct.id != null)
+                              ? 'EDIT CATEGORY'
+                              : 'NEW CATEGORY',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                       TextFormField(

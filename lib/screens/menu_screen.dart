@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
@@ -20,12 +22,33 @@ class _MenuScreenState extends State<MenuScreen> {
   String nodeName = 'categories';
   List<Category> categoriesList = [];
 
+  StreamSubscription _onChildAdded;
+  StreamSubscription _onChildRemoved;
+  StreamSubscription _onChildChanged;
+
   @override
   void initState() {
-    _database.reference().child(nodeName).onChildAdded.listen(_childAdded);
-    _database.reference().child(nodeName).onChildRemoved.listen(_childRemoves);
-    _database.reference().child(nodeName).onChildChanged.listen(_childChanged);
+    _onChildAdded =
+        _database.reference().child(nodeName).onChildAdded.listen(_childAdded);
+    _onChildRemoved = _database
+        .reference()
+        .child(nodeName)
+        .onChildRemoved
+        .listen(_childRemoves);
+    _onChildChanged = _database
+        .reference()
+        .child(nodeName)
+        .onChildChanged
+        .listen(_childChanged);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _onChildAdded.cancel();
+    _onChildRemoved.cancel();
+    _onChildChanged.cancel();
+    super.dispose();
   }
 
   @override
@@ -65,6 +88,7 @@ class _MenuScreenState extends State<MenuScreen> {
                   if (index < categoriesList.length) {
                     final category = categoriesList[index];
                     return CategoryListItem(
+                      key: UniqueKey(),
                       category: category,
                     );
                   }

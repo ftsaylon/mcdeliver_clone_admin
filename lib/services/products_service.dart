@@ -15,7 +15,6 @@ class ProductsService with ChangeNotifier {
   ProductsService({this.product});
 
   Future<void> addProduct() async {
-    print('adding...');
     await database.reference().child(nodeName).push().set(product.toMap());
   }
 
