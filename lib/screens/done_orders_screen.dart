@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 
@@ -45,43 +44,35 @@ class _DoneOrdersScreenState extends State<DoneOrdersScreen> {
               ),
             ),
           ),
-          FutureBuilder(
-            future: FirebaseAuth.instance.currentUser(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(child: CircularProgressIndicator());
-              }
-              return Visibility(
-                replacement: Center(
-                  child: Text(
-                    'You Have No Fulfilled Orders',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
+          Visibility(
+            replacement: Center(
+              child: Text(
+                'You Have No Fulfilled Orders',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            visible: ordersList.isNotEmpty,
+            child: Expanded(
+              child: FirebaseAnimatedList(
+                query: _database
+                    .reference()
+                    .child('orders')
+                    .orderByChild('isOnTheWay')
+                    .equalTo(true),
+                itemBuilder: (context, snapshot, animation, index) {
+                  final order = ordersList[index];
+                  return Visibility(
+                    visible: order.isOnTheWay,
+                    child: OrderListItem(
+                      order: order,
                     ),
-                  ),
-                ),
-                visible: ordersList.isNotEmpty,
-                child: Expanded(
-                  child: FirebaseAnimatedList(
-                    query: _database
-                        .reference()
-                        .child('orders')
-                        .orderByChild('isOnTheWay')
-                        .equalTo(true),
-                    itemBuilder: (context, snapshot, animation, index) {
-                      final order = ordersList[index];
-                      return Visibility(
-                        visible: order.isOnTheWay,
-                        child: OrderListItem(
-                          order: order,
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              );
-            },
+                  );
+                },
+              ),
+            ),
           ),
         ],
       ),

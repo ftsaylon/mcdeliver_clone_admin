@@ -14,7 +14,7 @@ class ProductsService with ChangeNotifier {
     await database.reference().child(nodeName).push().set(product.toMap());
   }
 
-  Future<void> deletePost() async {
+  Future<void> deleteProduct() async {
     await database.reference().child('$nodeName/${product.id}').remove();
   }
 

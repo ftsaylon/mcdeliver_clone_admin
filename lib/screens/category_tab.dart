@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:mcdelivery_clone_admin/screens/products_list.dart';
+import 'package:mcdelivery_clone_admin/models/category.dart';
+import 'package:mcdelivery_clone_admin/screens/products_list_screen.dart';
 
 class CategoryTab extends StatelessWidget {
-  const CategoryTab({Key key, this.categoryId}) : super(key: key);
+  final Category category;
 
-  final categoryId;
+  const CategoryTab({
+    Key key,
+    this.category,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(top: 8.0),
-      child: ProductsList(
-        categoryId: categoryId,
+      child: ProductsListScreen(
+        category: category,
       ),
     );
   }

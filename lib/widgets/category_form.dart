@@ -70,14 +70,14 @@ class _CategoryFormState extends State<CategoryForm> {
       } catch (error) {
         await showDialog(
           context: context,
-          builder: (ctx) => AlertDialog(
+          builder: (context) => AlertDialog(
             title: Text('An error occurred!'),
             content: Text('Something went wrong.'),
             actions: <Widget>[
               FlatButton(
                 child: Text('Okay'),
                 onPressed: () {
-                  Navigator.of(ctx).pop();
+                  Navigator.of(context).pop();
                 },
               )
             ],
@@ -106,7 +106,9 @@ class _CategoryFormState extends State<CategoryForm> {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Text(
-                    'NEW CATEGORY',
+                    (widget.category != null)
+                        ? 'EDIT CATEGORY'
+                        : 'NEW CATEGORY',
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,

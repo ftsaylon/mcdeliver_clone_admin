@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:mcdelivery_clone_admin/models/product.dart';
+import 'package:mcdelivery_clone_admin/services/products_service.dart';
 
 import '../models/category.dart';
 
@@ -26,5 +28,17 @@ class CategoriesService with ChangeNotifier {
 
   Future<void> deleteCategory() async {
     await database.reference().child('$nodeName/${category.id}').remove();
+
+    database
+        .reference()
+        .child('products')
+        .orderByChild('categoryId')
+        .equalTo(category.id)
+        .once()
+        .then(
+      (snapshot) {
+        database.reference().child('products/${snapshot.key}').remove();
+      },
+    );
   }
 }

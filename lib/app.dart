@@ -6,7 +6,7 @@ import 'package:mcdelivery_clone_admin/screens/edit_product_screen.dart';
 import 'package:mcdelivery_clone_admin/screens/main_screen.dart';
 import 'package:mcdelivery_clone_admin/screens/menu_screen.dart';
 import 'package:mcdelivery_clone_admin/screens/orders_screen.dart';
-import 'package:mcdelivery_clone_admin/screens/products_list.dart';
+import 'package:mcdelivery_clone_admin/screens/products_list_screen.dart';
 
 class App extends StatelessWidget {
   @override

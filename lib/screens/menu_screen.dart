@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:mcdelivery_clone_admin/models/category.dart';
@@ -57,27 +56,24 @@ class _MenuScreenState extends State<MenuScreen> {
               ],
             ),
           ),
-          FutureBuilder(
-            future: FirebaseAuth.instance.currentUser(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(child: CircularProgressIndicator());
-              }
-              return Visibility(
-                visible: categoriesList.isNotEmpty,
-                child: Expanded(
-                  child: FirebaseAnimatedList(
-                    query: _database.reference().child('categories'),
-                    itemBuilder: (context, snapshot, animation, index) {
-                      final category = categoriesList[index];
-                      return CategoryListItem(
-                        category: category,
-                      );
-                    },
-                  ),
-                ),
-              );
-            },
+          Visibility(
+            visible: categoriesList.isNotEmpty,
+            child: Expanded(
+              child: FirebaseAnimatedList(
+                query: _database.reference().child('categories'),
+                itemBuilder: (context, snapshot, animation, index) {
+                  if (index < categoriesList.length) {
+                    final category = categoriesList[index];
+                    return CategoryListItem(
+                      category: category,
+                    );
+                  }
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                },
+              ),
+            ),
           ),
         ],
       ),
