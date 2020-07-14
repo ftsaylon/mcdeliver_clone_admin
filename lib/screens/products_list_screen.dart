@@ -128,8 +128,8 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
                       .orderByChild('categoryId')
                       .equalTo(widget.category.id),
                   itemBuilder: (context, snapshot, animation, index) {
-                    final product = productsList[index];
                     if (index < productsList.length) {
+                      final product = productsList[index];
                       return ProductListItem(
                         key: UniqueKey(),
                         product: product,

@@ -77,11 +77,15 @@ class _OrdersScreenState extends State<OrdersScreen> {
                     .orderByChild('isOnTheWay')
                     .equalTo(false),
                 itemBuilder: (context, snapshot, animation, index) {
-                  final order = ordersList[index];
-                  return OrderListItem(
-                    key: UniqueKey(),
-                    order: order,
-                  );
+                  if (index < ordersList.length) {
+                    final order = ordersList[index];
+                    print(index);
+                    return OrderListItem(
+                      key: UniqueKey(),
+                      order: order,
+                    );
+                  }
+                  return Center(child: CircularProgressIndicator());
                 },
               ),
             ),
@@ -115,9 +119,16 @@ class _OrdersScreenState extends State<OrdersScreen> {
       return order.id == event.snapshot.key;
     });
 
-    setState(() {
-      ordersList[ordersList.indexOf(changedOrder)] =
-          Order.fromSnapshot(event.snapshot);
-    });
+    final newOrder = Order.fromSnapshot(event.snapshot);
+
+    if (newOrder.isOnTheWay) {
+      setState(() {
+        ordersList.removeAt(ordersList.indexOf(changedOrder));
+      });
+    } else {
+      setState(() {
+        ordersList[ordersList.indexOf(changedOrder)] = newOrder;
+      });
+    }
   }
 }
